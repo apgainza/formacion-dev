@@ -1,0 +1,5 @@
+<root>
+    <item name='net.ttddyy.dsproxy.listener.logging.SLF4JSlowQueryListener'>
+        <annotation name='java.lang.Deprecated'/>
+    </item>
+</root>

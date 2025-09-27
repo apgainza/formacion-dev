@@ -1,0 +1,39 @@
+spring:
+  output:
+    ansi:
+      enabled: ALWAYS
+  flyway:
+    enabled: true
+    locations: classpath:migration/versions
+    baseline-version: 0
+    logging:
+      level: DEBUG
+
+  datasource:
+    url: jdbc:postgresql://localhost:5434/dev
+    username: sa
+    password: root
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+
+fwkcna:
+  jpa:
+    data-migration:
+      disabled: false
+
+decorator:
+  datasource:
+    enabled: true
+    datasource-proxy: #
+      logging: slf4j
+      query:  #
+        enable-logging: true
+        log-level: INFO
+      format-sql: true  #
+
+logging:
+  level:
+    org.springframework.aop: DEBUG
