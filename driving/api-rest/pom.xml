@@ -16,7 +16,7 @@
   </parent>
 
   <properties>
-    <example.api.version>2.2.2</example.api.version>
+    <example.api.version>1.0.0</example.api.version>
   </properties>
 
   <dependencies>
@@ -36,11 +36,17 @@
       <artifactId>fwkcna-starter-security</artifactId>
     </dependency>
 
-    <dependency>
+   <!-- <dependency>
 			<groupId>com.mercadona.framework.cna.api.examples</groupId>
 			<artifactId>examples-api-server-cna-17</artifactId>
 			<version>${example.api.version}</version>
-		</dependency>
+		</dependency>-->
+
+    <dependency>
+      <groupId>com.mercadona.alejandro.web-dev</groupId>
+      <artifactId>alejandro-api-server-cna-17</artifactId>
+      <version>${example.api.version}</version>
+    </dependency>
 
     <dependency>
       <groupId>org.springframework.security</groupId>

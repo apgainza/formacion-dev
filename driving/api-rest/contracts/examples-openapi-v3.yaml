@@ -1,148 +1,153 @@
 openapi: 3.0.1
 info:
-  title: Quickstart service Demo
-  description: Example API definition for quickstart project
-  version: 2.2.2
+  title: Product API
+  description: Product API definition
+  version: 1.0.0
 tags:
-  - name: examples
-    description: Example Controller
+  - name: stores
+    description: Store Controller
+  - name: products
+    description: Product Controller
 paths:
-  /examples:
+  /products:
     get:
       tags:
-        - examples
-      summary: Method to retrieve a collection of examples
-      description: This method retrieves a collection of examples
-      operationId: getExampleCollection
+        - products
+      summary: Method to retrieve a collection of products
+      description: This method retrieves a collection of products
+      operationId: getProductCollection
       parameters:
-        - name: firstPage
-          in: query
-          description: Requested page (first page is page 1). If not specified 1 is
-            used. [Cannot be negative or zero]
-          schema:
-            type: integer
-            format: int32
-            default: 1
-        - name: pageSize
-          in: query
-          description: Number of retrieved elements per page. if not specified 10 is
-            used. [Cannot be less than 1]
-          schema:
-            type: integer
-            format: int32
-            default: 10
-        - name: sort
-          in: query
-          description: 'Sort of the query. [sort=+id] will order asc by id, or [sort=+id] desc by id). Default unsorted.'
-          schema:
-            type: string
+        - $ref: '#/components/parameters/firstPage'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/sort'
       responses:
         200:
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ExampleResourceCollectionResponse'
+                $ref: '#/components/schemas/ProductPageResponse'
         400:
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResourceResponse'
+          $ref: '#/components/responses/BadRequest'
         401:
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResourceResponse'
+          $ref: '#/components/responses/Unauthorized'
         403:
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResourceResponse'
+          $ref: '#/components/responses/Forbidden'
         404:
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResourceResponse'
+          $ref: '#/components/responses/NotFound'
         500:
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResourceResponse'
+          $ref: '#/components/responses/InternalServerError'
       security:
         - adfs: [ ]
-      x-mercadona-security:
-        operationgroups:
-          - DCNA_GET_ObtenerProductos
     post:
       tags:
-        - examples
-      summary: Method to add one example to the data storage
-      description: This method creates a new example with the given body information
-      operationId: createExample
+        - products
+      summary: Method to add a new product
+      description: This method create a new product
+      operationId: createProduct
       requestBody:
-        description: exampleRequest
+        description: productRequest
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ExampleRequest'
-        required: true
+              $ref: '#/components/schemas/ProductRequest'
       responses:
-        201:
-          description: Created
+        200:
+          description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ExampleResourceResponse'
+                $ref: '#/components/schemas/ProductResponse'
         400:
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResourceResponse'
+          $ref: '#/components/responses/BadRequest'
         401:
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResourceResponse'
+          $ref: '#/components/responses/Unauthorized'
         403:
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResourceResponse'
+          $ref: '#/components/responses/Forbidden'
         404:
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResourceResponse'
+          $ref: '#/components/responses/NotFound'
         500:
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResourceResponse'
+          $ref: '#/components/responses/InternalServerError'
       security:
         - adfs: [ ]
-      x-mercadona-security:
-        operationgroups:
-          - DCNA_POST_AProductos
-      x-codegen-request-body-name: exampleRequest
-  /examples/{id}:
+  /products/{productId}:
     get:
       tags:
-        - examples
-      summary: Method to retrieve one example
-      description: This method retrieves a example defined by a specific id
-      operationId: getExample
+        - products
+      summary: Method to retrieve one product
+      description: This method retrieves a product specific by identifier
+      operationId: getProductById
       parameters:
-        - name: id
+        - name: productId
+          in: path
+          description: Product Id
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - $ref: '#/components/parameters/locale'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductResponse'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+      security:
+        - adfs: [ ]
+  /products/product-bar-code/{codeBar}:
+    get:
+      tags:
+        - products
+      summary: Method to retrieve one product
+      description: This method retrieves a product specific by bar code
+      operationId: getCodeBarProduct
+      parameters:
+        - name: codeBar
+          in: path
+          description: codeBar
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/locale'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductResponse'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+      security:
+        - adfs: [ ]
+  /stores/{storeId}:
+    get:
+      tags:
+        - stores
+      summary: Method to retrieve one store
+      description: This method retrieves a store defined by a specific id
+      operationId: getStore
+      parameters:
+        - name: storeId
           in: path
           description: id
           required: true
@@ -155,50 +160,27 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ExampleResourceResponse'
+                $ref: '#/components/schemas/StoreResponse'
         400:
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResourceResponse'
+          $ref: '#/components/responses/BadRequest'
         401:
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResourceResponse'
+          $ref: '#/components/responses/Unauthorized'
         403:
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResourceResponse'
+          $ref: '#/components/responses/Forbidden'
         404:
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResourceResponse'
+          $ref: '#/components/responses/NotFound'
         500:
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResourceResponse'
+          $ref: '#/components/responses/InternalServerError'
       security:
         - adfs: [ ]
-      x-mercadona-security:
-        operationgroups:
-          - DCNA_GET_idProducto
     put:
       tags:
-        - examples
-      summary: Method to update a example
-      description: This method updates a example defined by its id
-      operationId: updateExample
+        - stores
+      summary: Method to update a store
+      description: This method update a store defined by its id
+      operationId: updateStore
       parameters:
-        - name: id
+        - name: storeId
           in: path
           description: id
           required: true
@@ -206,11 +188,11 @@ paths:
             type: integer
             format: int64
       requestBody:
-        description: exampleRequest
+        description: storeRequest
         content:
-          '*/*':
+          application/json:
             schema:
-              $ref: '#/components/schemas/ExampleRequest'
+              $ref: '#/components/schemas/StoreRequest'
         required: true
       responses:
         200:
@@ -218,51 +200,28 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ExampleResourceResponse'
+                $ref: '#/components/schemas/StoreResponse'
         400:
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResourceResponse'
+          $ref: '#/components/responses/BadRequest'
         401:
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResourceResponse'
+          $ref: '#/components/responses/Unauthorized'
         403:
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResourceResponse'
+          $ref: '#/components/responses/Forbidden'
         404:
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResourceResponse'
+          $ref: '#/components/responses/NotFound'
         500:
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResourceResponse'
+          $ref: '#/components/responses/InternalServerError'
       security:
         - adfs: [ ]
-      x-mercadona-security:
-        operationgroups:
-          - DCNA_PUT_idEditarProducto
-      x-codegen-request-body-name: exampleRequest
+      x-codegen-request-body-name: storeRequest
     delete:
       tags:
-        - examples
-      summary: Method to delete a example
-      description: This method delete a example by its id
-      operationId: deleteExample
+        - stores
+      summary: Method to delete a store
+      description: This method delete a store defined by its id
+      operationId: deleteStore
       parameters:
-        - name: id
+        - name: storeId
           in: path
           description: id
           required: true
@@ -274,163 +233,184 @@ paths:
           description: No content
           content: { }
         400:
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResourceResponse'
+          $ref: '#/components/responses/BadRequest'
         401:
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResourceResponse'
+          $ref: '#/components/responses/Unauthorized'
         403:
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResourceResponse'
+          $ref: '#/components/responses/Forbidden'
         404:
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResourceResponse'
+          $ref: '#/components/responses/NotFound'
         500:
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResourceResponse'
+          $ref: '#/components/responses/InternalServerError'
       security:
         - adfs: [ ]
-      x-mercadona-security:
-        operationgroups:
-          - DCNA_DEL_idDeleteProducto
+  /stores/search:
+    post:
+      tags:
+        - stores
+      summary: Method to search/filter stores
+      description: This method retrieves stores filtered by criteria with pagination and sorting
+      operationId: searchStores
+      parameters:
+        - $ref: '#/components/parameters/firstPage'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/sort'
+      requestBody:
+        description: Filter criteria to search stores
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StoreFilterRequest'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StorePageResponse'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+      security:
+        - adfs: [ ]
+  /stores:
+    post:
+      tags:
+        - stores
+      summary: Method to create a store
+      description: This method creates a store
+      operationId: createStore
+      requestBody:
+        description: storeRequest
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StoreRequest'
+        required: true
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoreResponse'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+      security:
+        - adfs: [ ]
+      x-codegen-request-body-name: storeRequest
 components:
   schemas:
-    LegacyResource:
-      title: LegacyResource
+    ProductRequest:
+      title: productRequest
       type: object
       properties:
-        publicId:
-          type: string
-        thirdPartyId:
-          type: string
-        siteId:
-          type: string
-        companyId:
-          type: string
-        typeId:
-          type: string
         name:
           type: string
-        location:
+          required: true
+        code:
+          pattern: ^[0-9]{8}$
           type: string
-        province:
-          type: string
-        groupingName:
-          type: string
-        activationDate:
-          type: string
-        deactivationDate:
-          type: string
-    LegacyResourceResponse:
-      title: LegacyResourceResponse
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/LegacyResource'
-    EmptyObject:
-      title: EmptyObject
-      type: object
-    ExampleRequest:
-      title: ExampleRequest
-      required:
-        - creationTime
-        - description
-        - identification
-        - identificationType
-        - name
-        - numberOfDaysInWeek
+          required: true
+        category:
+          type: integer
+          format: int64
+        state:
+          $ref : '#/components/schemas/ProductTypeRequestEnum'
+    StoreRequest:
+      title: StoreRequest
       type: object
       properties:
         id:
           type: integer
           format: int64
         name:
+          pattern: ^.{0,100}$
           type: string
-        description:
-          maxLength: 30
-          minLength: 5
+          required: true
+        code:
+          pattern: ^[0-9]{6}$
           type: string
-        creationTime:
-          type: string
-          format: date-time
-        identificationType:
-          $ref: '#/components/schemas/IdentificationTypesRequestEnum'
-        identification:
-          pattern: (?:(?=^[0-9])[0-9]{8}[A-Z]{1}$|(?!^[0-9])[A-Z]{1}[0-9]{7}[A-Z]{1}$)
-          type: string
-        numberOfDaysInWeek:
-          maximum: 7
-          minimum: 1
-          type: integer
-          format: int32
-    ExampleResource:
-      title: ExampleResource
-      type: object
-      properties:
-        id:
+          required: true
+        country:
           type: integer
           format: int64
-        name:
-          type: string
-        description:
-          type: string
-        creationTime:
-          type: string
-          format: date-time
-        identificationType:
-          $ref: '#/components/schemas/IdentificationTypesRequestEnum'
-        identification:
-          type: string
-        numberOfDaysInWeek:
-          type: integer
-          format: int32
-    ExampleResourceResponse:
-      title: ExampleResourceResponse
+          required: true
+    StorePageResponse:
+      title: StorePageResponse
       type: object
       properties:
         data:
-          $ref: '#/components/schemas/ExampleResource'
-    ExampleResourceCollection:
-      title: ExampleResourceCollection
-      type: object
-      properties:
-        examples:
           type: array
           items:
-            $ref: '#/components/schemas/ExampleResource'
-    ExampleResourceCollectionResponse:
-      title: ExampleResourceCollectionResponse
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/ExampleResourceCollection'
+            $ref: '#/components/schemas/StoreResponse'
         pagination:
-          $ref: '#/components/schemas/Pagination'
-    ExampleResourceCollectionCursorResponse:
-      title: ExampleResourceCollectionCursorResponse
+          $ref: '#/components/schemas/PaginationResponse'
+    StoreFilterRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        code:
+          type: string
+        country:
+          type: string
+    StoreResponse:
+      title: StoreResponse
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        code:
+          type: string
+    ProductPageResponse:
+      title: ProductPageResponse
       type: object
       properties:
         data:
-          $ref: '#/components/schemas/ExampleResourceCollection'
-        cursorPagination:
-          $ref: '#/components/schemas/CursorPagination'
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductResponse'
+        pagination:
+          $ref: '#/components/schemas/PaginationResponse'
+    ProductResponse:
+      title: ProductResponse
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        code:
+          type: string
+        state:
+          $ref: '#/components/schemas/ProductTypeRequestEnum'
+    ProductTypeRequestEnum:
+      type: string
+      required: true
+      enum:
+        - ACTIVE
+        - INACTIVE
     ErrorResource:
       title: ErrorResource
       type: object
@@ -453,7 +433,7 @@ components:
       enum:
         - DNI
         - NIE
-    Pagination:
+    PaginationResponse:
       type: object
       properties:
         requestedPage:
@@ -483,6 +463,84 @@ components:
           type: string
         previousPage:
           type: string
+  parameters:
+    locale:
+      name: locale
+      in: query
+      description: Language locale
+      required: false
+      schema:
+        type: string
+        pattern: '^[a-z]{2}([_-][A-Z]{2})?$'
+        default: 'es-ES'
+        example: 'es-ES'
+    firstPage:
+      name: firstPage
+      in: query
+      description: Requested page (first page is page 1). If not specified 1 is
+        used. [Cannot be negative or zero]
+      schema:
+        type: integer
+        format: int32
+        default: 1
+    pageSize:
+      name: pageSize
+      in: query
+      description: Number of retrieved elements per page. if not specified 10 is
+        used. [Cannot be less than 1]
+      schema:
+        type: integer
+        format: int32
+        default: 10
+    sort:
+      name: sort
+      in: query
+      description: 'Sort of the query. [sort=+id] will order asc by id, or [sort=+id] desc by id). Default unsorted.'
+      schema:
+        type: string
+  responses:
+    UnexpectedError:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResource'
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResource'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResource'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResource'
+    NotFound:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResource'
+    Conflict:
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResource'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResource'
   securitySchemes:
     adfs:
       type: oauth2

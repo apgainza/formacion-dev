@@ -15,9 +15,14 @@ import java.util.Set;
 @NoArgsConstructor(staticName = "empty")
 public class ProductFilter {
 
+  private Long productId;
   private String name;
   private BigDecimal price;
   private Set<String> tags;
+
+  public boolean hasProductId(){
+    return productId != null;
+  }
 
   public boolean hasName() {
     return StringUtils.isNotBlank(name);
@@ -29,6 +34,10 @@ public class ProductFilter {
 
   public boolean hasTags() {
     return tags != null;
+  }
+
+  public boolean hasAnyFilter(){
+    return hasProductId() || hasName() || hasPrice() || hasTags();
   }
 
 }

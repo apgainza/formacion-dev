@@ -1,7 +1,7 @@
 spring:
-  output:
-    ansi:
-      enabled: ALWAYS
+#  output:
+#    ansi:
+#      enabled: ALWAYS
   flyway:
     enabled: true
     locations: classpath:migration/versions
@@ -17,12 +17,16 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
+    properties:
+      hibernate:
+        #generate_statistics: true
+        #show_sql: false
 
 fwkcna:
   jpa:
     data-migration:
-      disabled: false
+      disabled: true
 
 decorator:
   datasource:

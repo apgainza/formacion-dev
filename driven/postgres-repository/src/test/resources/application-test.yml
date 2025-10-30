@@ -22,11 +22,10 @@ decorator:
 #      append: true
 #      custom-appender-class: com.p6spy.engine.spy.appender.Slf4JLogger
     datasource-proxy: #
-      json-format: true
+      json-format: false
       count-query: true
-      multiline: false
       slowQuery:
-        enable-logging: true
+        enable-logging: false
         threshold: 0.5
         writeIsolation : true
       logging: slf4j

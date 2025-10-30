@@ -1,0 +1,46 @@
+
+### Search stores with filters
+POST http://localhost:8080/stores/search?firstPage=1&pageSize=10&sort=+name
+Content-Type: application/json
+
+{
+  "name": "la"
+}
+
+###
+GET http://localhost:8080/stores/4
+
+###
+POST http://localhost:8080/stores
+Content-Type: application/json
+
+{
+  "name": "Tienda de Alejandro",
+  "code": "003333",
+  "country": 1
+}
+
+###
+PUT http://localhost:8080/stores/11
+Content-Type: application/json
+
+{
+  "id": 11,
+  "name": "Tienda de Alejandro 2",
+  "code": "333332",
+  "country": 2
+}
+
+###
+DELETE http://localhost:8080/stores/6
+
+
+### Create a product
+POST http://localhost:8080/products
+Content-Type: application/json
+
+{
+  "name": "Albondigas",
+  "code": "12121212",
+  "category": 2
+}

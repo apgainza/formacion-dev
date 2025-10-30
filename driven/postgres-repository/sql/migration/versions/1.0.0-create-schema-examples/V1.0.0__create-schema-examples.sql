@@ -1,39 +1,36 @@
-/*==============================================================*/
-/* Table: O_EXAMPLES                                              */
-/*==============================================================*/
 
-CREATE TABLE public.O_EXAMPLES (
-	ID BIGSERIAL NOT NULL,
-	CREATION_TIME TIMESTAMP NULL,
-	DESCRIPTION VARCHAR(255) NULL,
-	IDENTIFICATION VARCHAR(255) NULL,
-	IDENTIFICATION_TYPE INT4 NULL,
-	NAME VARCHAR(255) NULL,
-	DAYS_IN_WEEK INT4 NULL,
-	CONSTRAINT O_EXAMPLES_PKEY PRIMARY KEY (ID)
-);
+--  Categorías
+INSERT INTO CATEGORY (ID, NAME)
+VALUES (nextval('category_sequence'), 'Fruta y Verdura');
 
-comment on table O_EXAMPLES is
-'Tabla que contiene los ejemplos';
+INSERT INTO CATEGORY (ID, NAME)
+VALUES (nextval('category_sequence'), 'Pescado');
 
-comment on column O_EXAMPLES.ID is
-'Código del ejemplo.';
+INSERT INTO CATEGORY (ID, NAME)
+VALUES (nextval('category_sequence'), 'Secos');
 
-comment on column O_EXAMPLES.CREATION_TIME is
-'Fecha de creación del ejemplo.';
+-- Países
+INSERT INTO COUNTRY (ID, CODE, NAME)
+VALUES (nextval('country_sequence'), '08', 'España');
 
-comment on column O_EXAMPLES.DESCRIPTION is
-'descripción del ejemplo.';
+INSERT INTO COUNTRY (ID, CODE, NAME)
+VALUES (nextval('country_sequence'), '09', 'Portugal');
 
-comment on column O_EXAMPLES.IDENTIFICATION is
-'Identificación del ejemplo.';
+-- Tiendas
+INSERT INTO STORE (ID, NAME, CODE, COUNTRY_ID)
+VALUES (nextval('store_sequence'), 'La esprilla', '003117', 1);
 
-comment on column O_EXAMPLES.IDENTIFICATION_TYPE is
-'Tipo de identificación del ejemplo.';
+INSERT INTO STORE (ID, NAME, CODE, COUNTRY_ID)
+VALUES (nextval('store_sequence'), 'Solares', '004778', 1);
 
-comment on column O_EXAMPLES.NAME is
-'Nombre del ejemplo.';
+INSERT INTO STORE (ID, NAME, CODE, COUNTRY_ID)
+VALUES (nextval('store_sequence'), 'Oporto', '007008', 2);
 
-comment on column O_EXAMPLES.DAYS_IN_WEEK is
-'Número del día de la semana del ejemplo.';
+-- Productos
+INSERT INTO PRODUCT (ID, NAME, CODE, STATE, CATEGORY_ID)
+VALUES (nextval('product_sequence'), 'Manzana', '12232390', 'ACTIVE', 1);
+
+-- Surtido
+INSERT INTO ASSORTMENT (PRODUCT_ID, STORE_ID)
+VALUES (1, 1);
 

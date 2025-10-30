@@ -9,6 +9,7 @@ spec:
     type:
       fwkSpringBoot:
         groupId: com.mercadona.alejandro.web-dev
-        artifactId: example-api
-        package: com.mercadona.alejandro.api.web-dev
-        interfacesWithTags: false
+        artifactId: alejandro-api
+        package: com.mercadona.alejandro.web-dev
+        interfacesWithTags: true
+        jsonInclude: NON_NULL
