@@ -17,9 +17,20 @@
 
   <properties>
     <example.api.version>1.0.0</example.api.version>
+    <openapiGenerator.server.additionalModelTypeAnnotations>
+      @lombok.Builder;
+      @lombok.NoArgsConstructor;
+      @lombok.AllArgsConstructor;
+      @com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.ALWAYS)
+    </openapiGenerator.server.additionalModelTypeAnnotations>
   </properties>
 
   <dependencies>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-validation</artifactId>
+    </dependency>
 
     <dependency>
       <groupId>com.mercadona.alejandro.dev</groupId>
@@ -36,24 +47,80 @@
       <artifactId>fwkcna-starter-security</artifactId>
     </dependency>
 
+    <dependency>
+        <groupId>io.swagger.core.v3</groupId>
+        <artifactId>swagger-annotations</artifactId>
+        <!-- versión de ejemplo; usa la que tengáis estándar en el proyecto -->
+        <version>2.2.22</version>
+      </dependency>
+
    <!-- <dependency>
 			<groupId>com.mercadona.framework.cna.api.examples</groupId>
 			<artifactId>examples-api-server-cna-17</artifactId>
 			<version>${example.api.version}</version>
 		</dependency>-->
 
-    <dependency>
+    <!--<dependency>
       <groupId>com.mercadona.alejandro.web-dev</groupId>
       <artifactId>alejandro-api-server-cna-17</artifactId>
       <version>${example.api.version}</version>
-    </dependency>
+    </dependency>-->
 
     <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-test</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-expression</artifactId>
+    </dependency>
 
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.openapitools</groupId>
+        <artifactId>openapi-generator-maven-plugin</artifactId>
+        <version>7.17.0</version>
+
+        <executions>
+          <execution>
+            <id>generate-spring-api</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <configuration>
+              <inputSpec>${project.basedir}/contracts/examples-openapi-v3.yaml</inputSpec>
+              <generatorName>spring</generatorName>
+              <library>spring-boot</library>
+              <generateModels>true</generateModels>
+              <generateModelTests>false</generateModelTests>
+              <generateModelDocumentation>false</generateModelDocumentation>
+              <generateApiTests>false</generateApiTests>
+              <generateApiDocumentation>false</generateApiDocumentation>
+              <apiPackage>com.mercadona.examen.esqueleto.api</apiPackage>
+              <modelPackage>com.mercadona.examen.esqueleto.model</modelPackage>
+              <output>${project.build.directory}/generated-sources</output>
+              <skipValidateSpec>true</skipValidateSpec>
+              <configOptions>
+                <additionalModelTypeAnnotations>${openapiGenerator.server.additionalModelTypeAnnotations}</additionalModelTypeAnnotations>
+                <booleanGetterPrefix>is</booleanGetterPrefix>
+                <interfaceOnly>true</interfaceOnly>
+                <dateLibrary>java8</dateLibrary>
+                <useTags>true</useTags>
+                <useJakartaEe>false</useJakartaEe>
+                <useSpringBoot3>false</useSpringBoot3>
+                <modelMutable>true</modelMutable>
+                <generateConstructors>false</generateConstructors>
+              </configOptions>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>

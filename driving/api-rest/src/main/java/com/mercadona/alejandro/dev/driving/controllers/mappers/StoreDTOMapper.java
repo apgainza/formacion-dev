@@ -1,9 +1,12 @@
 package com.mercadona.alejandro.dev.driving.controllers.mappers;
 
-import com.mercadona.alejandro.dev.domain.Product;
+
 import com.mercadona.alejandro.dev.domain.Store;
 import com.mercadona.alejandro.dev.domain.StoreFilter;
-import com.mercadona.alejandro.web_dev.model.*;
+import com.mercadona.alejandro.dev.driving.controllers.adapters.model.StoreFilterRequest;
+import com.mercadona.alejandro.dev.driving.controllers.adapters.model.StorePageResponse;
+import com.mercadona.alejandro.dev.driving.controllers.adapters.model.StoreRequest;
+import com.mercadona.alejandro.dev.driving.controllers.adapters.model.StoreResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.data.domain.Page;

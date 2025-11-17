@@ -13,6 +13,10 @@ public interface StoreDatasourcePort {
 
   Optional<Store> getStoreById(Long id);
 
+  Page<Store> findAllStores(StoreFilter storeFilter, Integer pageNumber, Integer pageSize, String sort);
+
+  Page<Store> findAllStoresProjections(StoreFilter storeFilter, Integer pageNumber, Integer pageSize, String sort);
+
   Optional<Store> getStoreByCode(String code);
 
   Store save(Store store);

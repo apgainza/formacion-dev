@@ -23,7 +23,23 @@ public class StoreUseCase implements StorePort {
 
   @Override
   public Page<Store> searchAllStores(StoreFilter storeFilter, Integer pageNumber, Integer pageSize, String sort) {
-    return storeDatasourcePort.getAllStores(storeFilter, pageNumber, pageSize, sort);
+
+    log.info("----------------------------");
+    log.info("Searching stores with filter");
+    log.info("----------------------------");
+    Page<Store> stores = storeDatasourcePort.getAllStores(storeFilter, pageNumber, pageSize, sort);
+
+    log.info("------------------------------------------------");
+    log.info("Searching stores projections with filter and Ids");
+    Page<Store> storesProjections = storeDatasourcePort.findAllStores(storeFilter, pageNumber, pageSize, sort);
+    log.info("------------------------------------------------");
+
+    log.info("-----------------------------------------------");
+    log.info("Searching stores projections custom with filter");
+    Page<Store> allStoresProjections = storeDatasourcePort.findAllStoresProjections(storeFilter, pageNumber, pageSize, sort);
+    log.info("------------------------------------------------");
+
+    return storesProjections;
   }
 
   @Override
@@ -40,7 +56,9 @@ public class StoreUseCase implements StorePort {
   @Override
   public Store save(Store store) {
     String code = store.getCode();
-    getStoreByCode(code).ifPresent(savedStore -> {throw new StoreExistsException(I18NKeys.Store.EXISTS, code);});
+    getStoreByCode(code).ifPresent(savedStore -> {
+      throw new StoreExistsException(I18NKeys.Store.EXISTS, code);
+    });
 
     return storeDatasourcePort.save(store);
   }

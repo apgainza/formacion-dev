@@ -3,12 +3,12 @@ package com.mercadona.alejandro.dev.driving.controllers.adapters;
 import com.mercadona.alejandro.dev.application.ports.driving.StorePort;
 import com.mercadona.alejandro.dev.domain.Store;
 import com.mercadona.alejandro.dev.domain.StoreFilter;
+import com.mercadona.alejandro.dev.driving.controllers.adapters.api.StoresApi;
+import com.mercadona.alejandro.dev.driving.controllers.adapters.model.StoreFilterRequest;
+import com.mercadona.alejandro.dev.driving.controllers.adapters.model.StorePageResponse;
+import com.mercadona.alejandro.dev.driving.controllers.adapters.model.StoreRequest;
+import com.mercadona.alejandro.dev.driving.controllers.adapters.model.StoreResponse;
 import com.mercadona.alejandro.dev.driving.controllers.mappers.StoreDTOMapper;
-import com.mercadona.alejandro.web_dev.definition.server.StoresApi;
-import com.mercadona.alejandro.web_dev.model.StoreFilterRequest;
-import com.mercadona.alejandro.web_dev.model.StorePageResponse;
-import com.mercadona.alejandro.web_dev.model.StoreRequest;
-import com.mercadona.alejandro.web_dev.model.StoreResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -45,7 +45,7 @@ public class StoreControllerAdapter implements StoresApi {
   }
 
   @Override
-  public ResponseEntity<StoreResponse> updateStore(Long storeId, @Valid StoreRequest storeRequest) {
+  public ResponseEntity<StoreResponse> updateStore(Long storeId, StoreRequest storeRequest) {
     Store store = storePort.update(storeId, storeDTOMapper.toDomain(storeRequest));
     return ResponseEntity.ok(storeDTOMapper.fromDomain(store));
   }

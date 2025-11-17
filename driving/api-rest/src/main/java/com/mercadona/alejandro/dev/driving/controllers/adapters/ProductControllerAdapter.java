@@ -2,11 +2,11 @@ package com.mercadona.alejandro.dev.driving.controllers.adapters;
 
 import com.mercadona.alejandro.dev.application.ports.driving.ProductPort;
 import com.mercadona.alejandro.dev.domain.Product;
+import com.mercadona.alejandro.dev.driving.controllers.adapters.api.ProductsApi;
+import com.mercadona.alejandro.dev.driving.controllers.adapters.model.ProductPageResponse;
+import com.mercadona.alejandro.dev.driving.controllers.adapters.model.ProductRequest;
+import com.mercadona.alejandro.dev.driving.controllers.adapters.model.ProductResponse;
 import com.mercadona.alejandro.dev.driving.controllers.mappers.ProductDTOMapper;
-import com.mercadona.alejandro.web_dev.definition.server.ProductsApi;
-import com.mercadona.alejandro.web_dev.model.ProductPageResponse;
-import com.mercadona.alejandro.web_dev.model.ProductRequest;
-import com.mercadona.alejandro.web_dev.model.ProductResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

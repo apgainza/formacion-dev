@@ -1,6 +1,6 @@
 package com.mercadona.alejandro.dev.driving.controllers.mappers;
 
-import com.mercadona.alejandro.web_dev.model.PaginationResponse;
+import com.mercadona.alejandro.dev.driving.controllers.adapters.model.PaginationResponse;
 import org.mapstruct.Mapper;
 import org.springframework.data.domain.Page;
 

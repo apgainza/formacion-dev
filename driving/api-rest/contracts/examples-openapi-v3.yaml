@@ -367,10 +367,20 @@ components:
       properties:
         name:
           type: string
+          example: "La esprilla"
         code:
           type: string
+          example: "003117"
         country:
           type: string
+          example: "España"
+        product:
+          type: string
+          example: "003117"
+        category:
+          type: integer
+          format: int64
+          example: 1
     StoreResponse:
       title: StoreResponse
       type: object

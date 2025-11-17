@@ -1,10 +1,10 @@
 
 ### Search stores with filters
-POST http://localhost:8080/stores/search?firstPage=1&pageSize=10&sort=+name
+POST http://localhost:8080/stores/search?firstPage=1&pageSize=2&sort=-name,-country.code
 Content-Type: application/json
 
 {
-  "name": "la"
+  "product": "12232390"
 }
 
 ###

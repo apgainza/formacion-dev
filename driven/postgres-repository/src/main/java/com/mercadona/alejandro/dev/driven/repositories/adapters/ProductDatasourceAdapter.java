@@ -6,6 +6,7 @@ import com.mercadona.alejandro.dev.application.ports.driven.ProductDatasourcePor
 import com.mercadona.alejandro.dev.domain.Product;
 import com.mercadona.alejandro.dev.domain.UpsertProductCommand;
 import com.mercadona.alejandro.dev.driven.repositories.ProductRepository;
+import com.mercadona.alejandro.dev.driven.repositories.StoreRepository;
 import com.mercadona.alejandro.dev.driven.repositories.mappers.ProductDbMapper;
 import com.mercadona.alejandro.dev.driven.repositories.models.*;
 import com.mercadona.framework.cna.lib.repository.builders.MercadonaPageBuilder;

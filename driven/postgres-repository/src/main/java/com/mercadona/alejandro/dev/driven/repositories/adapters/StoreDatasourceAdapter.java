@@ -5,16 +5,19 @@ import com.mercadona.alejandro.dev.domain.Store;
 import com.mercadona.alejandro.dev.domain.StoreFilter;
 import com.mercadona.alejandro.dev.driven.repositories.filtering.StoreFiltering;
 import com.mercadona.alejandro.dev.driven.repositories.mappers.StoreDbMapper;
-import com.mercadona.alejandro.dev.driven.repositories.models.StoreRepository;
+import com.mercadona.alejandro.dev.driven.repositories.StoreRepository;
 import com.mercadona.alejandro.dev.driven.repositories.models.StoreMO;
+import com.mercadona.alejandro.dev.driven.repositories.projections.StoreProjection;
 import com.mercadona.framework.cna.lib.repository.builders.MercadonaPageBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -32,6 +35,28 @@ public class StoreDatasourceAdapter implements StoreDatasourcePort {
     Specification<StoreMO> process = StoreFiltering.process(storeFilter);
     return storeRepository.findAll(process, pageable)
       .map(storeDbMapper::toDomain);
+  }
+
+  @Override
+  public Page<Store> findAllStores(StoreFilter storeFilter, Integer pageNumber, Integer pageSize, String sort) {
+    Pageable pageable = mercadonaPageBuilder.builder().page(pageNumber).pageSize(pageSize).sort(sort).build();
+
+    Specification<StoreMO> spec = StoreFiltering.process(storeFilter);
+
+    Page<Long> ids = storeRepository.findIdsAll(spec, pageable);
+
+    List<Store> data = storeRepository.findProjectionsByIds(ids.getContent(), pageable).stream().map(storeDbMapper::toDomain).toList();
+
+    return new PageImpl<Store>(data, pageable, ids.getTotalElements());
+  }
+
+  @Override
+  public Page<Store> findAllStoresProjections(StoreFilter storeFilter, Integer pageNumber, Integer pageSize, String sort) {
+    Pageable pageable = mercadonaPageBuilder.builder().page(pageNumber).pageSize(pageSize).sort(sort).build();
+
+    Specification<StoreMO> spec = StoreFiltering.process(storeFilter);
+
+    return storeRepository.findAllProjections(spec, pageable).map(storeDbMapper::toDomain);
   }
 
   @Override
